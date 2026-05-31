@@ -1,0 +1,28 @@
+/* Docs site styles: the published library stylesheet (themes + fonts included). */
+/* @source the docs dir so utility classes used only in the docs UI are emitted. */
+@import "../src/styles.css";
+@source "./";
+
+/* Lightweight prose styling for hand-written usage notes (Tailwind v4 ships
+   no base typography, so we style the raw tags the registry renders). */
+.docs-prose {
+  line-height: 1.65;
+}
+.docs-prose p {
+  margin-block: 0.5rem;
+}
+.docs-prose ul {
+  margin-block: 0.5rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+.docs-prose li {
+  margin-block: 0.25rem;
+}
+.docs-prose code {
+  border-radius: 0.25rem;
+  background: var(--muted);
+  padding: 0.1rem 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}

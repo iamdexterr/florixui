@@ -1,0 +1,141 @@
+/*
+ * Distributable stylesheet for the component library.
+ * Consumers import this once: `import "@your-scope/ui/styles.css"`.
+ *
+ * It ships 5 selectable themes (see themes.css). Switch by setting
+ * `data-theme="<slug>"` on a root element; the default (no attribute) is
+ * "slate-blue". Toggle dark mode with the `dark` class.
+ *
+ * @source tells Tailwind v4 which files to scan for utility classes so the
+ * compiled CSS contains every class the components use.
+ */
+@import "tailwindcss";
+@source "./components";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Theme token definitions (:root + [data-theme=...] scopes). */
+@import "./themes.css";
+
+/*
+ * Fonts are intentionally NOT bundled here, to keep this a single
+ * self-contained CSS file. Each theme's --font-* stack falls back to system
+ * fonts. To render a theme in its true typeface, install the matching
+ * @fontsource package(s) in your app and import them — for example:
+ *   npm i @fontsource-variable/inter
+ *   import "@fontsource-variable/inter";
+ * Fonts used by the bundled themes: Inter, JetBrains Mono, Roboto Mono,
+ * DM Sans, DM Serif Text, DM Mono, Merriweather, Noto Serif Georgian.
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+/* Map the design tokens (themes.css) onto Tailwind's color/utility system. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  /* Global semantic accents (themes.css). */
+  --color-red: var(--red);
+  --color-red-foreground: var(--red-foreground);
+  --color-orange: var(--orange);
+  --color-orange-foreground: var(--orange-foreground);
+  --color-blue: var(--blue);
+  --color-blue-foreground: var(--blue-foreground);
+  --color-green: var(--green);
+  --color-green-foreground: var(--green-foreground);
+  --color-yellow: var(--yellow);
+  --color-yellow-foreground: var(--yellow-foreground);
+  --color-cyan: var(--cyan);
+  --color-cyan-foreground: var(--cyan-foreground);
+  --color-purple: var(--purple);
+  --color-purple-foreground: var(--purple-foreground);
+  --color-teal: var(--teal);
+  --color-teal-foreground: var(--teal-foreground);
+  --color-gray: var(--gray);
+  --color-gray-foreground: var(--gray-foreground);
+  --color-pink: var(--pink);
+  --color-pink-foreground: var(--pink-foreground);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-sans);
+
+  /* Flattened to a uniform small radius: every component using the sm/md/lg
+     scale lands on the same 4px corner (--radius). xl stays a touch larger. */
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 2px);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+
+  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+  --tracking-normal: var(--tracking-normal);
+  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    letter-spacing: var(--tracking-normal);
+  }
+}
+
+/* MapLibre popups: strip the default white wrapper so only the component's own
+   card (bg-popover, border, shadow) shows. Without this, the dark popup sits
+   inside MapLibre's default white box. The maplibre-gl stylesheet is bundled
+   after this file, so we use !important to win regardless of source order. */
+.maplibregl-popup .maplibregl-popup-content {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.maplibregl-popup .maplibregl-popup-tip {
+  display: none !important;
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI · Component Library Docs</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Apply the saved theme + dark mode before paint to avoid a flash. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('docs-color-theme') || 'slate-blue'
+          document.documentElement.setAttribute('data-theme', t)
+          var d = localStorage.getItem('docs-theme')
+          var dark = d
+            ? d === 'dark'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+          document.documentElement.classList.toggle('dark', dark)
+        } catch (e) {}
+      })()
+    </script>
+    <script type="module" src="/docs/main.tsx"></script>
+  </body>
+</html>
