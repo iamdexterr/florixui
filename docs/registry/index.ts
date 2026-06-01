@@ -6,6 +6,7 @@ import { advancedSelectDoc } from './advanced-select'
 import { colorsDoc } from './colors'
 import { dataTableDoc } from './data-table'
 import { dateTimeRangePickerDoc } from './date-time-range-picker'
+import { fileUploadDoc } from './file-upload'
 import { mapDoc } from './map'
 import { stepperDoc } from './stepper'
 import { timelineDoc } from './timeline'
@@ -54,6 +55,7 @@ export const components: ComponentDoc[] = [
   colorsDoc,
   dataTableDoc,
   dateTimeRangePickerDoc,
+  fileUploadDoc,
   mapDoc,
   stepperDoc,
   timelineDoc,

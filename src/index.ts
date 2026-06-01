@@ -3,9 +3,21 @@
 
 export { cn } from "@/lib/utils"
 
+// Hooks & headless utilities.
+export {
+  useFileUpload,
+  formatBytes,
+  type FileMetadata,
+  type FileWithPreview,
+  type FileUploadOptions,
+  type FileUploadState,
+  type FileUploadActions,
+} from "@/lib/use-file-upload"
+
 // Custom components (not from the shadcn registry).
 export * from "@/components/custom/actions-menu"
 export * from "@/components/custom/advanced-input"
+export * from "@/components/custom/file-upload"
 export * from "@/components/custom/advanced-select"
 export * from "@/components/custom/data-table"
 export * from "@/components/custom/date-time-range-picker"
