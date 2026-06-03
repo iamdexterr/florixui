@@ -33,7 +33,10 @@ export function Introduction() {
   return (
     <article className="space-y-6">
       <header className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">FlorixUI</h1>
+        <div className="flex items-center gap-3">
+          <img src="/logo.png" alt="FlorixUI logo" className="size-12" />
+          <h1 className="text-3xl font-semibold tracking-tight">FlorixUI</h1>
+        </div>
         <p className="text-lg text-muted-foreground">
           A React component library built on shadcn/ui and Tailwind CSS —
           themeable, accessible, and ready to drop in.

@@ -23,9 +23,8 @@ export function DocsApp() {
       {/* Top bar */}
       <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b bg-background/80 px-6 backdrop-blur">
         <a href="#/" className="flex items-center gap-2 font-semibold">
-          <span className="inline-block size-5 rounded-md bg-primary" />
-          <span>UI</span>
-          <span className="text-muted-foreground">docs</span>
+          <img src="/logo.png" alt="FlorixUI logo" className="size-6" />
+          <span>FlorixUI</span>
         </a>
         <div className="flex items-center gap-2">
           <ThemePicker theme={theme} setTheme={setTheme} />
