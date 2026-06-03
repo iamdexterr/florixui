@@ -28,6 +28,7 @@ import { checkboxDoc } from './checkbox'
 import { commandDoc } from './command'
 import { dialogDoc } from './dialog'
 import { dropdownMenuDoc } from './dropdown-menu'
+import { facetedFilterDoc } from './faceted-filter'
 import { fieldDoc } from './field'
 import { hoverCardDoc } from './hover-card'
 import { inputGroupDoc } from './input-group'
@@ -63,6 +64,7 @@ export const components: ComponentDoc[] = [
   customTabsDoc,
   dataTableDoc,
   dateTimeRangePickerDoc,
+  facetedFilterDoc,
   fileUploadDoc,
   formDialogDoc,
   mapDoc,

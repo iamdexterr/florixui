@@ -176,6 +176,35 @@ export const dataTableDoc: ComponentDoc = {
 />`,
     },
     {
+      name: 'Pagination',
+      description:
+        'Client-side pagination with a page-size selector. Selection is preserved across pages. Defaults to 25 per page with options [25, 50, 100, 200].',
+      render: () => (
+        <DataTable
+          data={[...SECTIONS, ...SECTIONS, ...SECTIONS].map((r, i) => ({
+            ...r,
+            id: `${r.id}-${i}`,
+          }))}
+          columns={columns}
+          getRowId={(r) => r.id}
+          selectable
+          pagination
+          pageSize={5}
+          pageSizeOptions={[5, 10, 25]}
+        />
+      ),
+      code: `// Defaults: pageSize={25}, pageSizeOptions={[25, 50, 100, 200]}
+<DataTable
+  data={sections}
+  columns={columns}
+  getRowId={(r) => r.id}
+  pagination
+  // override when needed:
+  pageSize={5}
+  pageSizeOptions={[5, 10, 25]}
+/>`,
+    },
+    {
       name: 'Empty state',
       render: () => (
         <DataTable
@@ -233,6 +262,25 @@ export const dataTableDoc: ComponentDoc = {
       type: 'ReactNode',
       default: '"No results."',
       description: 'Shown when data is empty.',
+    },
+    {
+      prop: 'pagination',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Enable client-side pagination with a footer of page controls.',
+    },
+    {
+      prop: 'pageSize',
+      type: 'number',
+      default: '25',
+      description: 'Rows per page when pagination is enabled.',
+    },
+    {
+      prop: 'pageSizeOptions',
+      type: 'number[]',
+      default: '[25, 50, 100, 200]',
+      description: 'Rows-per-page options shown in the footer selector.',
     },
     {
       prop: 'striped',

@@ -1,6 +1,8 @@
 import * as React from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
@@ -14,6 +16,7 @@ import {
   ActionsMenu,
   type ActionsMenuItem,
 } from "@/components/custom/actions-menu";
+import { AdvancedSelect } from "@/components/custom/advanced-select";
 import { Spinner } from "@/components/ui/spinner";
 
 // ============================================================================
@@ -50,6 +53,13 @@ export interface DataTableProps<TRow> {
   // --- states ---
   loading?: boolean;
   emptyMessage?: React.ReactNode;
+  // --- pagination (optional, client-side) ---
+  /** Enable client-side pagination with a footer of page controls. */
+  pagination?: boolean;
+  /** Rows per page. Default `25`. */
+  pageSize?: number;
+  /** Page-size options in the footer selector. Default `[25, 50, 100, 200]`. */
+  pageSizeOptions?: number[];
   // --- appearance ---
   /** Alternating row backgrounds for easier scanning. */
   striped?: boolean;
@@ -82,6 +92,9 @@ export function DataTable<TRow>({
   rowActions,
   loading = false,
   emptyMessage = "No results.",
+  pagination = false,
+  pageSize: pageSizeProp = 25,
+  pageSizeOptions = [25, 50, 100, 200],
   striped = true,
   stickyHeader = false,
   maxHeight,
@@ -117,26 +130,48 @@ export function DataTable<TRow>({
   const totalCols =
     columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0);
 
+  // --- pagination (client-side) ---
+  const [pageSize, setPageSize] = React.useState(pageSizeProp);
+  const [rawPageIndex, setPageIndex] = React.useState(0);
+
+  const pageCount = pagination
+    ? Math.max(1, Math.ceil(data.length / pageSize))
+    : 1;
+  // Clamp during render (no effect): if data shrank or page size grew, the last
+  // valid page is shown without an extra render pass.
+  const pageIndex = Math.min(rawPageIndex, pageCount - 1);
+
+  // Rows for the current page, paired with their original index so selection,
+  // striping, and cell renderers keep using the row's true position.
+  const pageRows = React.useMemo(() => {
+    const rows = data.map((row, index) => ({ row, index }));
+    if (!pagination) return rows;
+    const start = pageIndex * pageSize;
+    return rows.slice(start, start + pageSize);
+  }, [data, pagination, pageIndex, pageSize]);
+
   // Comfier, consistent cell padding; first/last cells get extra edge inset.
   const cellPad = "px-4 py-3 first:pl-5 last:pr-5";
   const headPad = "px-4 first:pl-5 last:pr-5";
 
   return (
-    <div
-      className={cn(
-        "rounded-lg border",
-        maxHeight !== undefined ? "overflow-auto" : "overflow-hidden",
-        className,
-      )}
-      style={
-        maxHeight !== undefined
-          ? {
-              maxHeight:
-                typeof maxHeight === "number" ? `${maxHeight}px` : maxHeight,
-            }
-          : undefined
-      }
-    >
+    <div className={cn("rounded-lg border", className)}>
+      <div
+        className={cn(
+          "overflow-hidden rounded-lg",
+          maxHeight !== undefined ? "overflow-auto" : "overflow-hidden",
+          // Square the bottom corners when a footer follows.
+          pagination && "rounded-b-none",
+        )}
+        style={
+          maxHeight !== undefined
+            ? {
+                maxHeight:
+                  typeof maxHeight === "number" ? `${maxHeight}px` : maxHeight,
+              }
+            : undefined
+        }
+      >
       <Table>
         <TableHeader
           className={cn(
@@ -195,7 +230,7 @@ export function DataTable<TRow>({
               </TableCell>
             </TableRow>
           ) : (
-            data.map((row, index) => {
+            pageRows.map(({ row, index }) => {
               const id = ids[index];
               const isSelected = selected.includes(id);
               return (
@@ -256,6 +291,65 @@ export function DataTable<TRow>({
           )}
         </TableBody>
       </Table>
+      </div>
+
+      {pagination && (
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t px-4 py-3 text-sm">
+          <p className="text-muted-foreground">
+            Page {data.length === 0 ? 0 : pageIndex + 1} of {pageCount} (
+            {data.length} total {data.length === 1 ? "item" : "items"})
+          </p>
+
+          <div className="flex items-center gap-4">
+            {pageSizeOptions && pageSizeOptions.length > 0 && (
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <span className="whitespace-nowrap">Rows per page</span>
+                <AdvancedSelect
+                  size="sm"
+                  className="w-20"
+                  value={String(pageSize)}
+                  onValueChange={(v) => {
+                    // Single-select emits the chosen option object; read its value.
+                    const raw =
+                      typeof v === "object" && v !== null && "value" in v
+                        ? (v as { value: string }).value
+                        : v;
+                    setPageSize(Number(raw));
+                    setPageIndex(0);
+                  }}
+                  options={pageSizeOptions.map((opt) => ({
+                    value: String(opt),
+                    label: String(opt),
+                  }))}
+                />
+              </div>
+            )}
+
+            <div className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                size="icon-sm"
+                aria-label="Previous page"
+                disabled={pageIndex <= 0}
+                onClick={() => setPageIndex(Math.max(0, pageIndex - 1))}
+              >
+                <ChevronLeftIcon />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon-sm"
+                aria-label="Next page"
+                disabled={pageIndex >= pageCount - 1}
+                onClick={() =>
+                  setPageIndex(Math.min(pageCount - 1, pageIndex + 1))
+                }
+              >
+                <ChevronRightIcon />
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

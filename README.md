@@ -349,6 +349,32 @@ A bordered surface that groups related content and actions into a single contain
 </Card>
 ```
 
+### Card Radio Group
+
+A radio group whose options are bordered cards — each with an optional icon, a label (plus inline sublabel), and a description. The whole card is clickable and the selected card highlights its border.
+
+```tsx
+<CardRadioGroup
+  defaultValue="mastercard"
+  items={[
+    {
+      value: 'mastercard',
+      label: 'Mastercard',
+      sublabel: '(•••• 4242)',
+      description: 'You can use this card with a label and a description.',
+      icon: <MastercardIcon />,
+    },
+    {
+      value: 'visa',
+      label: 'Visa',
+      sublabel: '(•••• 1881)',
+      description: 'You can use this card with a label and a description.',
+      icon: <VisaIcon />,
+    },
+  ]}
+/>
+```
+
 ### Chart
 
 A theming and tooltip/legend wrapper around Recharts that maps a config object to CSS color variables for consistent, accessible charts.
@@ -410,6 +436,21 @@ A fast, composable command menu with fuzzy search for navigating actions, built 
     </CommandGroup>
   </CommandList>
 </Command>
+```
+
+### Custom Tabs
+
+A higher-level tab strip with two looks — underline and pill — driven by a single items array. Each tab can carry an icon, a numeric count, and a short badge like "New". Built on Radix Tabs for keyboard and a11y support.
+
+```tsx
+const navItems = [
+  { value: 'overview', label: 'Overview', icon: <HomeIcon /> },
+  { value: 'projects', label: 'Projects', icon: <LayoutPanelTopIcon />, count: 3 },
+  { value: 'packages', label: 'Packages', icon: <PackageIcon />, badge: 'New' },
+  { value: 'team', label: 'Team', icon: <UsersIcon /> },
+]
+
+<CustomTabs type="underline" defaultValue="overview" items={navItems} />
 ```
 
 ### Data Table
@@ -513,6 +554,30 @@ Displays a menu of actions or options triggered by a button, built on Radix UI w
 </DropdownMenu>
 ```
 
+### Faceted Filter
+
+A controlled filter trigger and popover: a searchable list of options selectable as multi-select checkboxes (default) or single-select. Shows the selection as pills and emits the value(s) via onChange so you can filter your own list or API query.
+
+```tsx
+const [status, setStatus] = useState<string[]>(['backlog', 'todo'])
+
+<FacetedFilter
+  title="Status"
+  options={[
+    { value: 'backlog', label: 'Backlog', icon: <CircleDashedIcon />, count: 13 },
+    { value: 'todo', label: 'Todo', icon: <CircleIcon />, count: 12 },
+    // ...
+  ]}
+  value={status}
+  onChange={setStatus}
+/>
+
+// then filter your data:
+const filtered = status.length === 0
+  ? tasks
+  : tasks.filter((t) => status.includes(t.status))
+```
+
 ### Field
 
 Layout primitives that pair a form control with its label, description, and error message in a consistent, accessible structure.
@@ -525,6 +590,56 @@ Layout primitives that pair a form control with its label, description, and erro
     We'll only use this to send receipts.
   </FieldDescription>
 </Field>
+```
+
+### File Upload
+
+A batteries-included drag-and-drop uploader with validation, previews, and two layouts: a single-image dropzone and a multi-file card grid. Backed by the headless useFileUpload hook.
+
+```tsx
+<FileUpload
+  variant="image"
+  accept="image/*"
+  maxSize={5 * 1024 * 1024}
+/>
+```
+
+### Form Dialog
+
+A pre-composed modal for forms: a fixed bordered header (title, description, close button), a scrollable body, and an optional pinned footer for actions. Controlled via open/onClose.
+
+```tsx
+function Example() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Edit profile</Button>
+      <FormDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Edit profile"
+        description="Update your details. Changes are saved when you submit."
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button onClick={() => setOpen(false)}>Save changes</Button>
+          </>
+        }
+      >
+        <form className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="name">Name</Label>
+            <Input id="name" defaultValue="Ada Lovelace" />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="bio">Bio</Label>
+            <Textarea id="bio" rows={4} />
+          </div>
+        </form>
+      </FormDialog>
+    </>
+  )
+}
 ```
 
 ### Hover Card
@@ -676,6 +791,22 @@ Displays a list of options for the user to pick from, triggered by a button.
 </Select>
 ```
 
+### Sensor Card
+
+A compact info/action card with a left side (icon, mode label, description) and a right side (accent bar + value). Tint it with colorVariant, wrap it with variant, and wire onClick / onValueClick for actions.
+
+```tsx
+<SensorCard
+  variant="standalone"
+  icon={<BlindsIcon className="size-5 text-primary" />}
+  mode="Shades & Curtains"
+  description="shade 01"
+  value="Active"
+  showAccent
+  valueColorVariant="primary"
+/>
+```
+
 ### Separator
 
 Visually or semantically divides content, either horizontally or vertically.
@@ -721,6 +852,44 @@ A panel that slides in from an edge of the screen to show supplementary content 
 </Sheet>
 ```
 
+### Side Sheet
+
+A slide-in panel with a pinned header and a sticky footer — the header and footer stay fixed while the body scrolls between them. Ideal for long configuration forms. Controlled via open/onClose.
+
+```tsx
+function Example() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open configuration</Button>
+      <SideSheet
+        open={open}
+        onClose={() => setOpen(false)}
+        onBack={() => setOpen(false)}
+        floating
+        title="PID Equation Program Configuration"
+        footer={
+          <>
+            <Button onClick={() => setOpen(false)}>Save</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+          </>
+        }
+      >
+        <AdvancedInput label="Program name" placeholder="Enter program name" required />
+        <AdvancedSelect label="PID Equation Type" required options={EQUATION_TYPES} />
+
+        <SideSheetSection label="Reading VS Target Settings">
+          <div className="grid grid-cols-2 gap-4">
+            <AdvancedSelect label="Reading Source" options={SOURCES} />
+            <AdvancedSelect label="Target Source" options={SOURCES} />
+          </div>
+        </SideSheetSection>
+      </SideSheet>
+    </>
+  )
+}
+```
+
 ### Slider
 
 Lets users select a value or range from a continuous track by dragging one or more thumbs.
@@ -755,6 +924,20 @@ An animated loading indicator that communicates that content or an action is in 
 
 ```tsx
 <Spinner />
+```
+
+### Stat Card
+
+A dashboard metric card with a title, a bold value, and an optional accessory — a tinted icon, a colored trend delta, a linear progress bar, a sparkline area chart, or a radial ring.
+
+```tsx
+<StatCard
+  title="Total Revenue"
+  value="$45,231"
+  description="+20.1% from last month"
+  icon={<DollarSignIcon />}
+  color="danger"
+/>
 ```
 
 ### Stepper
