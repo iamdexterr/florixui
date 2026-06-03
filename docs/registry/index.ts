@@ -11,7 +11,9 @@ import { dateTimeRangePickerDoc } from './date-time-range-picker'
 import { fileUploadDoc } from './file-upload'
 import { formDialogDoc } from './form-dialog'
 import { mapDoc } from './map'
+import { sensorCardDoc } from './sensor-card'
 import { sideSheetDoc } from './side-sheet'
+import { statCardDoc } from './stat-card'
 import { stepperDoc } from './stepper'
 import { timelineDoc } from './timeline'
 import { alertDialogDoc } from './alert-dialog'
@@ -64,7 +66,9 @@ export const components: ComponentDoc[] = [
   fileUploadDoc,
   formDialogDoc,
   mapDoc,
+  sensorCardDoc,
   sideSheetDoc,
+  statCardDoc,
   stepperDoc,
   timelineDoc,
   alertDoc,
