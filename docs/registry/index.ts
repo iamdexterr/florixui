@@ -3,11 +3,15 @@ import type { ComponentDoc } from './types'
 import { actionsMenuDoc } from './actions-menu'
 import { advancedInputDoc } from './advanced-input'
 import { advancedSelectDoc } from './advanced-select'
+import { cardRadioGroupDoc } from './card-radio-group'
 import { colorsDoc } from './colors'
+import { customTabsDoc } from './custom-tabs'
 import { dataTableDoc } from './data-table'
 import { dateTimeRangePickerDoc } from './date-time-range-picker'
 import { fileUploadDoc } from './file-upload'
+import { formDialogDoc } from './form-dialog'
 import { mapDoc } from './map'
+import { sideSheetDoc } from './side-sheet'
 import { stepperDoc } from './stepper'
 import { timelineDoc } from './timeline'
 import { alertDialogDoc } from './alert-dialog'
@@ -52,11 +56,15 @@ export const components: ComponentDoc[] = [
   actionsMenuDoc,
   advancedInputDoc,
   advancedSelectDoc,
+  cardRadioGroupDoc,
   colorsDoc,
+  customTabsDoc,
   dataTableDoc,
   dateTimeRangePickerDoc,
   fileUploadDoc,
+  formDialogDoc,
   mapDoc,
+  sideSheetDoc,
   stepperDoc,
   timelineDoc,
   alertDoc,
