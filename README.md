@@ -438,6 +438,26 @@ A fast, composable command menu with fuzzy search for navigating actions, built 
 </Command>
 ```
 
+### Confirm Prompt
+
+A confirmation dialog for risky actions — mainly deletes. An amber warning icon sits beside the title with a red confirm button, plus an optional type-to-confirm safeguard and async loading support.
+
+```tsx
+const [show, setShow] = useState(false)
+
+<Button variant="destructive" onClick={() => setShow(true)}>
+  Delete project
+</Button>
+<ConfirmPrompt
+  show={show}
+  onCancel={() => setShow(false)}
+  onConfirm={() => deleteProject(id)}
+  title="Delete project?"
+  message="This action cannot be undone…"
+  confirmLabel="Delete"
+/>
+```
+
 ### Custom Tabs
 
 A higher-level tab strip with two looks — underline and pill — driven by a single items array. Each tab can carry an icon, a numeric count, and a short badge like "New". Built on Radix Tabs for keyboard and a11y support.
@@ -556,7 +576,7 @@ Displays a menu of actions or options triggered by a button, built on Radix UI w
 
 ### Faceted Filter
 
-A controlled filter trigger and popover: a searchable list of options selectable as multi-select checkboxes (default) or single-select. Shows the selection as pills and emits the value(s) via onChange so you can filter your own list or API query.
+A controlled filter trigger and popover: a searchable list of options selectable as multi-select checkboxes (default) or single-select. Shows a selected-count badge on the trigger and emits the value(s) via onChange so you can filter your own list or API query.
 
 ```tsx
 const [status, setStatus] = useState<string[]>(['backlog', 'todo'])
@@ -711,6 +731,37 @@ Renders an accessible caption for a form control, associating text with an input
   <Label htmlFor="email">Email</Label>
   <Input id="email" type="email" placeholder="you@example.com" />
 </div>
+```
+
+### List Card
+
+A minimal content card for list and grid layouts. A top row (badge + meta), an optional media thumbnail beside a title and description, a footer, and a corner actions menu — every slot is optional, so it renders any kind of data.
+
+```tsx
+<ListCardGrid columns={3}>
+  {alerts.map((a) => (
+    <ListCard
+      key={a.id}
+      badge={a.badge}
+      title={a.title}
+      description={a.description}
+      media={a.imageUrl}
+      meta={<><ClockIcon className="size-3" /> 10:12 AM</>}
+      actions={[
+        { label: 'View details', icon: EyeIcon },
+        { label: 'Mark as safe', icon: CheckIcon },
+        { type: 'separator' },
+        { label: 'Archive', icon: ArchiveIcon, destructive: true },
+      ]}
+      footer={
+        <>
+          <ListCardPerson name={a.person} />
+          <ListCardChip icon={<TruckIcon />}>{a.entity}</ListCardChip>
+        </>
+      }
+    />
+  ))}
+</ListCardGrid>
 ```
 
 ### Map
