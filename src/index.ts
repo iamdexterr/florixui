@@ -29,6 +29,7 @@ export * from "@/components/custom/quick-stat"
 export * from "@/components/custom/sensor-card"
 export * from "@/components/custom/side-sheet"
 export * from "@/components/custom/stat-card"
+export * from "@/components/custom/status-list"
 export * from "@/components/custom/date-time-range-picker"
 export {
   presetToRange,

@@ -24,7 +24,7 @@ function BitCard({ spec }: { spec: BitSpec }) {
   }
 
   return (
-    <Card className="overflow-hidden">
+    <Card className={cn('overflow-hidden', spec.wide && 'sm:col-span-2')}>
       <CardHeader>
         <CardTitle className="text-base">{spec.name}</CardTitle>
         <CardDescription>{spec.description}</CardDescription>

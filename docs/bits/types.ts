@@ -11,4 +11,6 @@ export interface BitSpec {
   render: () => ReactNode
   /** Copy-able usage snippet. */
   code: string
+  /** Span the full gallery width (for wider composites). */
+  wide?: boolean
 }

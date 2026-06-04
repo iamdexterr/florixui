@@ -150,8 +150,39 @@ export const cardDoc: ComponentDoc = {
   </CardContent>
 </Card>`,
     },
+    {
+      name: 'Background variants',
+      description:
+        'Use variant to change the surface — "alt" for a muted background, or a tone for status emphasis.',
+      render: () => (
+        <div className="grid w-full gap-3 sm:grid-cols-2">
+          {(['default', 'alt', 'primary', 'success', 'warning', 'danger'] as const).map(
+            (v) => (
+              <Card key={v} variant={v} size="sm">
+                <CardHeader>
+                  <CardTitle className="capitalize">{v}</CardTitle>
+                  <CardDescription>variant=&quot;{v}&quot;</CardDescription>
+                </CardHeader>
+              </Card>
+            )
+          )}
+        </div>
+      ),
+      code: `<Card variant="alt">…</Card>
+<Card variant="primary">…</Card>
+<Card variant="success">…</Card>
+<Card variant="warning">…</Card>
+<Card variant="danger">…</Card>`,
+    },
   ],
   props: [
+    {
+      prop: 'variant',
+      type: '"default" | "alt" | "primary" | "success" | "warning" | "danger"',
+      default: '"default"',
+      description:
+        'Background surface: alt is a muted background; the tones add a soft tinted background for status emphasis.',
+    },
     {
       prop: 'size',
       type: '"default" | "sm"',
