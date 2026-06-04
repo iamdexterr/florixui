@@ -26,6 +26,17 @@ export function Sidebar({ activeSlug }: { activeSlug: string }) {
       >
         Charts
       </a>
+      <a
+        href="#/bits"
+        className={cn(
+          'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+          activeSlug === 'bits'
+            ? 'bg-muted text-foreground'
+            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+        )}
+      >
+        Bits
+      </a>
 
       <p className="mt-4 mb-1 px-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
         Patterns
@@ -40,6 +51,17 @@ export function Sidebar({ activeSlug }: { activeSlug: string }) {
         )}
       >
         List Page
+      </a>
+      <a
+        href="#/detail-page"
+        className={cn(
+          'rounded-md px-3 py-1.5 text-sm transition-colors',
+          activeSlug === 'detail-page'
+            ? 'bg-muted font-medium text-foreground'
+            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+        )}
+      >
+        Detail Page
       </a>
 
       {groupedComponents.map(({ group, items }) => (

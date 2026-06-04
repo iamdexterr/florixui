@@ -309,7 +309,16 @@ export function ListPageExample() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-3">
+      {showCode ? (
+        <pre className="max-h-[70svh] overflow-auto rounded-xl border bg-muted/40 p-4 text-xs leading-relaxed">
+          <code>{source}</code>
+        </pre>
+      ) : (
+        <ListPage />
+      )}
+
+      {/* Pattern toolbar — at the bottom */}
+      <div className="flex items-center justify-between gap-3 border-t pt-4">
         <div>
           <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             Pattern
@@ -332,14 +341,6 @@ export function ListPageExample() {
           )}
         </div>
       </div>
-
-      {showCode ? (
-        <pre className="max-h-[70svh] overflow-auto rounded-xl border bg-muted/40 p-4 text-xs leading-relaxed">
-          <code>{source}</code>
-        </pre>
-      ) : (
-        <ListPage />
-      )}
     </div>
   )
 }

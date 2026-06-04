@@ -1,3 +1,5 @@
+import { ArrowRightIcon, PlusIcon, TrashIcon } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import type { ComponentDoc } from './types'
 
@@ -79,6 +81,57 @@ export const buttonDoc: ComponentDoc = {
 <Button variant="outline" disabled>Outline</Button>`,
     },
     {
+      name: 'With start / end items',
+      description:
+        'Pass startItem / endItem for leading or trailing icons (or any node).',
+      render: () => (
+        <div className="flex flex-wrap items-center gap-3">
+          <Button startItem={<PlusIcon />}>Add item</Button>
+          <Button variant="outline" endItem={<ArrowRightIcon />}>
+            Continue
+          </Button>
+          <Button variant="destructive" startItem={<TrashIcon />}>
+            Delete
+          </Button>
+        </div>
+      ),
+      code: `<Button startItem={<PlusIcon />}>Add item</Button>
+<Button variant="outline" endItem={<ArrowRightIcon />}>Continue</Button>
+<Button variant="destructive" startItem={<TrashIcon />}>Delete</Button>`,
+    },
+    {
+      name: 'Loading',
+      description:
+        'loading shows a spinner (in place of startItem) and disables the button.',
+      render: () => (
+        <div className="flex flex-wrap items-center gap-3">
+          <Button loading>Saving…</Button>
+          <Button variant="outline" loading>
+            Loading
+          </Button>
+        </div>
+      ),
+      code: `<Button loading>Saving…</Button>
+<Button variant="outline" loading>Loading</Button>`,
+    },
+    {
+      name: 'Icon size',
+      description:
+        'Icons auto-size to 1rem. Pass a size-* class on the icon to override.',
+      render: () => (
+        <div className="flex flex-wrap items-center gap-3">
+          <Button startItem={<PlusIcon />}>Default icon</Button>
+          <Button startItem={<PlusIcon className="size-5" />}>
+            Larger icon
+          </Button>
+        </div>
+      ),
+      code: `// auto-sized (1rem)
+<Button startItem={<PlusIcon />}>Default icon</Button>
+// override with a size-* class on the icon
+<Button startItem={<PlusIcon className="size-5" />}>Larger icon</Button>`,
+    },
+    {
       name: 'As a link (asChild)',
       render: () => (
         <Button asChild variant="link">
@@ -108,11 +161,28 @@ export const buttonDoc: ComponentDoc = {
       description: 'Controls height, padding, and icon sizing.',
     },
     {
+      prop: 'startItem',
+      type: 'React.ReactNode',
+      description: 'Content before the label, e.g. a leading icon.',
+    },
+    {
+      prop: 'endItem',
+      type: 'React.ReactNode',
+      description: 'Content after the label, e.g. a trailing icon or count.',
+    },
+    {
+      prop: 'loading',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Shows a spinner (replacing startItem) and disables the button.',
+    },
+    {
       prop: 'asChild',
       type: 'boolean',
       default: 'false',
       description:
-        'Merge props onto the single child element instead of rendering a <button>.',
+        'Merge props onto the single child element instead of rendering a <button>. (Affixes/loading are not injected in this mode.)',
     },
     {
       prop: '...props',

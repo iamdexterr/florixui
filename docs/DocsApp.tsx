@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { BitsGallery } from './components/BitsGallery'
 import { ChartsGallery } from './components/ChartsGallery'
 import { ComponentPage } from './components/ComponentPage'
 import { Introduction } from './components/Introduction'
+import { DetailPageExample } from './components/DetailPageExample'
 import { ListPageExample } from './components/ListPageExample'
 import { Sidebar } from './components/Sidebar'
 import { ThemePicker } from './components/ThemePicker'
@@ -32,7 +34,9 @@ export function DocsApp() {
 
   let content
   if (slug === 'charts') content = <ChartsGallery />
+  else if (slug === 'bits') content = <BitsGallery />
   else if (slug === 'list-page') content = <ListPageExample />
+  else if (slug === 'detail-page') content = <DetailPageExample />
   else if (doc) content = <ComponentPage doc={doc} />
   else content = <Introduction />
 
