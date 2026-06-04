@@ -1,5 +1,10 @@
 import * as React from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -329,6 +334,15 @@ export function DataTable<TRow>({
               <Button
                 variant="outline"
                 size="icon-sm"
+                aria-label="First page"
+                disabled={pageIndex <= 0}
+                onClick={() => setPageIndex(0)}
+              >
+                <ChevronsLeftIcon />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon-sm"
                 aria-label="Previous page"
                 disabled={pageIndex <= 0}
                 onClick={() => setPageIndex(Math.max(0, pageIndex - 1))}
@@ -345,6 +359,15 @@ export function DataTable<TRow>({
                 }
               >
                 <ChevronRightIcon />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon-sm"
+                aria-label="Last page"
+                disabled={pageIndex >= pageCount - 1}
+                onClick={() => setPageIndex(pageCount - 1)}
+              >
+                <ChevronsRightIcon />
               </Button>
             </div>
           </div>

@@ -27,6 +27,21 @@ export function Sidebar({ activeSlug }: { activeSlug: string }) {
         Charts
       </a>
 
+      <p className="mt-4 mb-1 px-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+        Patterns
+      </p>
+      <a
+        href="#/list-page"
+        className={cn(
+          'rounded-md px-3 py-1.5 text-sm transition-colors',
+          activeSlug === 'list-page'
+            ? 'bg-muted font-medium text-foreground'
+            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+        )}
+      >
+        List Page
+      </a>
+
       {groupedComponents.map(({ group, items }) => (
         <div key={group}>
           <p className="mt-4 mb-1 px-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
