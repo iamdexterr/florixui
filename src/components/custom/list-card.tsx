@@ -97,6 +97,11 @@ export interface ListCardProps
    * - `row`: a single line — checkbox, media, title/description, then menu.
    */
   layout?: "stacked" | "row"
+  /**
+   * Surface style. `default` uses the card background; `alt` uses the muted
+   * background so cards stand out when nested on a card-colored surface.
+   */
+  variant?: "default" | "alt"
   /** Render a selection checkbox. */
   selectable?: boolean
   /** Controlled checkbox state (with `selectable`). */
@@ -124,6 +129,7 @@ export function ListCard({
   footer,
   actions,
   layout = "stacked",
+  variant = "default",
   selectable = false,
   selected,
   onSelectedChange,
@@ -173,7 +179,8 @@ export function ListCard({
   )
 
   const rootClassName = cn(
-    "rounded-xl border bg-card p-4 text-card-foreground transition-colors",
+    "rounded-xl border p-4 text-card-foreground transition-colors",
+    variant === "alt" ? "bg-muted/50" : "bg-card",
     interactive &&
       "cursor-pointer hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
     active && "ring-2 ring-ring",

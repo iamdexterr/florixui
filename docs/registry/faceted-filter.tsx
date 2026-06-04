@@ -133,7 +133,7 @@ export const facetedFilterDoc: ComponentDoc = {
   name: 'Faceted Filter',
   group: 'Custom',
   description:
-    'A controlled filter trigger and popover: a searchable list of options selectable as multi-select checkboxes (default) or single-select. Shows the selection as pills and emits the value(s) via onChange so you can filter your own list or API query.',
+    'A controlled filter trigger and popover: a searchable list of options selectable as multi-select checkboxes (default) or single-select. Shows a selected-count badge on the trigger and emits the value(s) via onChange so you can filter your own list or API query.',
   usage: (
     <>
       <p>
@@ -153,8 +153,8 @@ export const facetedFilterDoc: ComponentDoc = {
         </li>
         <li>
           Each option can carry an <code>icon</code> and a <code>count</code>;
-          the trigger shows pills (or an “N selected” badge past{' '}
-          <code>maxDisplayed</code>). Hide the search with{' '}
+          the trigger shows a <strong>count badge</strong> of how many are
+          selected (not the labels). Hide the search with{' '}
           <code>searchable={'{false}'}</code>.
         </li>
       </ul>
@@ -245,12 +245,6 @@ const filtered = status.length === 0
       prop: 'searchPlaceholder',
       type: 'string',
       description: 'Placeholder for the search box (defaults to title).',
-    },
-    {
-      prop: 'maxDisplayed',
-      type: 'number',
-      default: '2',
-      description: 'Max selected pills before collapsing to "N selected".',
     },
     {
       prop: 'className',

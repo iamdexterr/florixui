@@ -505,6 +505,13 @@ export const listCardDoc: ComponentDoc = {
         'stacked = header + body + footer; row = a single line (checkbox, media, title, menu).',
     },
     {
+      prop: 'variant',
+      type: '"default" | "alt"',
+      default: '"default"',
+      description:
+        'default = card background; alt = muted background (stands out when nested on a card surface).',
+    },
+    {
       prop: 'selected / onSelectedChange',
       type: 'boolean / (checked: boolean) => void',
       description: 'Controlled checkbox state.',

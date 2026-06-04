@@ -45,8 +45,6 @@ interface BaseProps {
   searchPlaceholder?: string
   /** Hide the search box (for short lists). */
   searchable?: boolean
-  /** Max selected pills to show on the trigger before collapsing to a count. */
-  maxDisplayed?: number
   className?: string
 }
 
@@ -73,7 +71,7 @@ export type FacetedFilterProps = MultiProps | SingleProps
 /**
  * A controlled filter trigger + popover: a searchable list of options, each
  * selectable (multi-select checkboxes by default, or single-select with
- * `mode="single"`). Shows the selection as pills on the trigger and emits the
+ * `mode="single"`). Shows a selected-count badge on the trigger and emits the
  * value(s) via `onChange` — use it to filter your own list or API query.
  */
 export function FacetedFilter(props: FacetedFilterProps) {
@@ -82,7 +80,6 @@ export function FacetedFilter(props: FacetedFilterProps) {
     options,
     searchPlaceholder,
     searchable = true,
-    maxDisplayed = 2,
     className,
   } = props
 
@@ -117,8 +114,6 @@ export function FacetedFilter(props: FacetedFilterProps) {
     else (props.onChange as (v: string | null) => void)(null)
   }
 
-  const selectedOptions = options.filter((o) => selectedValues.has(o.value))
-
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -131,34 +126,13 @@ export function FacetedFilter(props: FacetedFilterProps) {
           {selectedValues.size > 0 && (
             <>
               <Separator orientation="vertical" className="mx-0.5 h-4" />
-              {/* Compact count on small screens */}
+              {/* Only a count — never the selected labels */}
               <Badge
                 variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
+                className="rounded-sm px-1 font-normal"
               >
                 {selectedValues.size}
               </Badge>
-              {/* Pills on larger screens */}
-              <div className="hidden gap-1 lg:flex">
-                {selectedValues.size > maxDisplayed ? (
-                  <Badge
-                    variant="secondary"
-                    className="rounded-sm px-1 font-normal"
-                  >
-                    {selectedValues.size} selected
-                  </Badge>
-                ) : (
-                  selectedOptions.map((option) => (
-                    <Badge
-                      variant="secondary"
-                      key={option.value}
-                      className="rounded-sm px-1 font-normal"
-                    >
-                      {option.label}
-                    </Badge>
-                  ))
-                )}
-              </div>
             </>
           )}
         </Button>

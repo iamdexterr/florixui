@@ -5,6 +5,8 @@ import { ChartsGallery } from './components/ChartsGallery'
 import { ComponentPage } from './components/ComponentPage'
 import { Introduction } from './components/Introduction'
 import { DetailPageExample } from './components/DetailPageExample'
+import { FleetViewExample } from './components/FleetViewExample'
+import { FormPatternsExample } from './components/FormPatternsExample'
 import { ListPageExample } from './components/ListPageExample'
 import { Sidebar } from './components/Sidebar'
 import { ThemePicker } from './components/ThemePicker'
@@ -37,6 +39,8 @@ export function DocsApp() {
   else if (slug === 'bits') content = <BitsGallery />
   else if (slug === 'list-page') content = <ListPageExample />
   else if (slug === 'detail-page') content = <DetailPageExample />
+  else if (slug === 'fleet-view') content = <FleetViewExample />
+  else if (slug === 'form-patterns') content = <FormPatternsExample />
   else if (doc) content = <ComponentPage doc={doc} />
   else content = <Introduction />
 

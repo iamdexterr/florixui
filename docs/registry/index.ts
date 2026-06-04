@@ -5,6 +5,7 @@ import { advancedInputDoc } from './advanced-input'
 import { advancedSelectDoc } from './advanced-select'
 import { cardRadioGroupDoc } from './card-radio-group'
 import { colorsDoc } from './colors'
+import { confirmPromptDoc } from './confirm-prompt'
 import { customTabsDoc } from './custom-tabs'
 import { dataTableDoc } from './data-table'
 import { dateTimeRangePickerDoc } from './date-time-range-picker'
@@ -62,6 +63,7 @@ export const components: ComponentDoc[] = [
   advancedSelectDoc,
   cardRadioGroupDoc,
   colorsDoc,
+  confirmPromptDoc,
   customTabsDoc,
   dataTableDoc,
   dateTimeRangePickerDoc,
