@@ -10,6 +10,7 @@ import { dataTableDoc } from './data-table'
 import { dateTimeRangePickerDoc } from './date-time-range-picker'
 import { fileUploadDoc } from './file-upload'
 import { formDialogDoc } from './form-dialog'
+import { listCardDoc } from './list-card'
 import { mapDoc } from './map'
 import { sensorCardDoc } from './sensor-card'
 import { sideSheetDoc } from './side-sheet'
@@ -67,6 +68,7 @@ export const components: ComponentDoc[] = [
   facetedFilterDoc,
   fileUploadDoc,
   formDialogDoc,
+  listCardDoc,
   mapDoc,
   sensorCardDoc,
   sideSheetDoc,
