@@ -1,7 +1,10 @@
 "use client";
 
 import MapLibreGL, { type PopupOptions, type MarkerOptions } from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
+// MapLibre's stylesheet is bundled via src/styles.css (not imported here) so the
+// published JS bundle stays a pure ESM module with no CSS side-effect imports —
+// a bare CSS import inside node_modules ESM breaks consumers' Vite/esbuild
+// dependency pre-bundling. Consumers already import florixui/dist/styles.css once.
 import {
   createContext,
   forwardRef,
